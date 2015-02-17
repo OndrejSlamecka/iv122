@@ -1,0 +1,8 @@
+# Site settings
+title: IV122
+description: Overview of work done in course IV122 Mathematics and Programming.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://ondrejslamecka.github.com/iv122"
+
+# Build settings
+markdown: kramdown
