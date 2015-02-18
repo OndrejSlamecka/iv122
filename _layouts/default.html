@@ -12,35 +12,37 @@
 <html>
 <body>
 
-    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
-  <div class="container">
-    <nav class="collapse navbar-collapse bs-navbar-collapse">
-      <ul class="nav navbar-nav">
-        {% for page in site.pages %}
-          {% if page.title %}
-          <li><a class="active" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
-          {% endif %}
-        {% endfor %}
-
-      </ul>
-    </nav>
-  </div>
+<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+	<div class="container">
+		<nav class="collapse navbar-collapse bs-navbar-collapse">
+			<ul class="nav navbar-nav">
+				{% for page in site.pages %}
+					{% if page.title %}
+					<li><a class="active" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</nav>
+	</div>
 </header>
 
-    <!-- Docs page layout -->
-    <div class="bs-docs-header" id="content">
-      <div class="container">
-        <h1>{{page.title}}</h1>
-     </div>
-    </div>
+<div class="bs-docs-header" id="content">
+	<div class="container">
+		<h1>{{page.title}}</h1>
+	</div>
+</div>
 
+<div class="page-content">
+	<div class="wrapper">
+		{{content}}
+	</div>
+</div>
 
-
-    <div class="page-content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </div>
+<footer class="bs-docs-footer">
+	<div class="container">
+		<p>Vzhled: <a href="https://getbootstrap.com/">Twitter Bootstrap</a>. Obsah: <a href="http://www.slamecka.cz">Ondřej Slámečka</a></p>
+	</div>
+</footer>
 
 <!-- //maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js -->
 </body>

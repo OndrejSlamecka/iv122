@@ -1,8 +1,10 @@
+/* This is from Twitter Bootstrap page, authors: https://twitter.com/mdo, https://twitter.com/fat */
+
 header.navbar {
 	margin-bottom: 0;
 }
 
-.bs-docs-header{
+.page-header {
 	position: relative;
 	padding: 20px 15px;
 	color: #cdbfe3;
@@ -23,7 +25,16 @@ h1 {
 	color: white;
 }
 
-.bs-docs-sidenav {
+.page-sidenav {
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+.page-footer {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	margin-top: 100px;
+	color: #767676;
+	text-align: center;
+	border-top: 1px solid #e5e5e5;
 }
