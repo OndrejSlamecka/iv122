@@ -6,14 +6,16 @@ layout: default
 	<div class="row">
 		<div class="col-md-9" role="main">
 			{% for post in site.categories[page.category] %}
-				<h2 id="{{post.webalized_name}}">{{post.title}}</h2>
+			<div id="{{post.webalized_name}}">
+				<h2>{{post.title}}</h2>
 
 				{{post.content}}
+			</div>
 			{% endfor %}
 		</div>
 
 		<div class="col-md-3">
-			<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+			<nav class="page-sidenav hidden-print hidden-xs hidden-sm affix">
 				<ul class="nav bs-docs-sidenav">
 					{% for post in site.categories[page.category] %}
 					<li>
