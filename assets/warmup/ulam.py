@@ -12,7 +12,6 @@ def spiral_image(is_on_spiral_cb, image_name):
     img = Image.new('RGB', (side_length + 1, side_length + 1), 'white')
     pixels = img.load()
 
-    ## Generating the image
     x = 0 # x offset from the middle
     y = 0
 

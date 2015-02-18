@@ -14,8 +14,8 @@ img = Image.new('RGB', (size, size), "white")
 draw = ImageDraw.Draw(img)
 
 for i in range(0,11):
-    start = (-800 + i*80, 0)
-    end = (0, -i*80)
+    start = (-size//2 + i*size//20, 0)
+    end = (0, -i*size//20)
 
     for j in [(1,1),(-1,1),(1,-1),(-1,-1)]:
         s = (start[0] * j[0], start[1] * j[1])
