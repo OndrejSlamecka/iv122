@@ -10,7 +10,6 @@ def collatz_steps(n):
 			n = 3*n + 1
 	return s
 
-
 for settings in [('small', 25), ('big', 8000)]:
 	interval = range(1, settings[1])
 	values = list(map(collatz_steps, interval))
