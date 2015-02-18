@@ -6,16 +6,16 @@
 import matplotlib.pyplot as plt
 
 def collatz_max(n):
-	m = n # m is max
-	while n != 1:
-		m = max(m,n)
+    m = n # m is max
+    while n != 1:
+        m = max(m,n)
 
-		if n % 2 == 0:
-			n = n // 2
-		else:
-			n = 3*n + 1
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3*n + 1
 
-	return m
+    return m
 
 interval = range(1,1000)
 values = list(map(collatz_max, interval))
