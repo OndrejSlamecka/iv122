@@ -2,18 +2,18 @@ from PIL import Image
 import numpy
 import math
 
+side_length = 500 # Length of side of the resulting image
+
 def is_prime(n):
     if n == 1 or (n % 2 == 0 and n > 2):
         return False
     return all(n % i for i in range(3, int(math.sqrt(n)) + 1, 2))
 
-side_length = 500 # Length of side of the resulting image
 def spiral_image(is_on_spiral_cb, image_name):
     img = Image.new('RGB', (side_length + 1, side_length + 1), 'white')
     pixels = img.load()
 
-    x = 0 # x offset from the middle
-    y = 0
+    x, y = 0, 0 # offset from the middle
 
     #             right    up     left    down
     directions = [(1,0), (0,-1), (-1,0), (0,1)]
@@ -22,7 +22,7 @@ def spiral_image(is_on_spiral_cb, image_name):
     direction_steps = 1 # number of steps done in a given direction
 
     i = 0
-    while i < side_length*side_length:
+    while i < side_length**2:
         for j in range(0,2):
             for k in range(0, direction_steps):
                 i += 1
