@@ -32,10 +32,10 @@ class Turtle:
     def left(self, angle):
         self.angle -= angle * math.pi/180
 
-    def penup(self):
+    def pen_up(self):
         self.pen = False
 
-    def pendown(self):
+    def pen_down(self):
         self.pen = True
 
     def save(self):
