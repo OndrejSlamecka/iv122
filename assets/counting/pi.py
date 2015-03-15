@@ -3,7 +3,7 @@ import random
 
 def leibniz(n):
     s = 0
-    for i in range(n):        
+    for i in range(n):
         s += ((-1)**i) / (2*i + 1.0)
 
     return s
@@ -25,13 +25,13 @@ def monte_carlo(n):
     inside_circle = 0
     for _ in range(0, n):
         r1 = random.random()
-        r2 = random.random()        
-        if (r1*r1 + r2*r2) < 1: 
+        r2 = random.random()
+        if (r1*r1 + r2*r2) < 1:
             inside_circle += 1
-    
+
     return 4.0 * inside_circle / n
 
-l1000 = leibniz(1000) * 4 
+l1000 = leibniz(1000) * 4
 print(l1000, l1000 - math.pi)
 print(archimedes(16))
 print(monte_carlo(100000))

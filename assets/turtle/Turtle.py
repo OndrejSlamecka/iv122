@@ -13,13 +13,11 @@ class Turtle:
         self.stroke = svgwrite.rgb(10, 10, 16, '%')
 
     def forward(self, dist):
-        if not self.pen:
-            return
-
         nx = self.x + math.cos(self.angle) * dist
         ny = self.y + math.sin(self.angle) * dist
 
-        self.lines.append((self.x, self.y, nx, ny))
+        if self.pen:
+            self.lines.append((self.x, self.y, nx, ny))
 
         self.x, self.y = nx, ny
 
