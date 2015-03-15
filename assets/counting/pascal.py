@@ -42,5 +42,5 @@ def draw_pascal(n, d):
         line = list(new_line)
 
 bp = BlockPainter('pascal.svg')
-draw_pascal(800, 100)
+draw_pascal(100, 30)
 bp.save()

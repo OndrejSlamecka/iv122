@@ -15,7 +15,6 @@ def step(dist, depth):
     turtle.left(60)
     step(dist//3, depth - 1)
 
-
 turtle.left(90)
 for i in range(3):
     step(400, 4)

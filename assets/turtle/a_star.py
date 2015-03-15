@@ -8,8 +8,8 @@ n = 60
 for i in range(n):
     turtle.right(360/n)
     if i % 2 == 1:
-        turtle.forward(400)
+        turtle.forward(253)
     else:
-        turtle.back(400)
+        turtle.back(253)
 
 turtle.save()

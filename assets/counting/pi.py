@@ -1,21 +1,25 @@
 import math
 import random
+from decimal import Decimal, getcontext
+D = Decimal
+getcontext().prec = 1020
 
 def leibniz(n):
     s = 0
     for i in range(n):
         s += ((-1)**i) / (2*i + 1.0)
 
-    return s
+    return s*4
 
 def archimedes(n):
-    polygon_edge_length_squared = 2.0
-    polygon_sides = 4
-    for i in range(n):
-        polygon_edge_length_squared = 2 - 2 * math.sqrt(1 - polygon_edge_length_squared / 4)
-        polygon_sides *= 2
+    els = D(2) # edge length squared
+    sides = 2
 
-    return polygon_sides * math.sqrt(polygon_edge_length_squared) / 2
+    for i in range(n):
+        els = D(2) - D(2) * (D(1) - els / D(4)).sqrt()
+        sides *= 2
+
+    return D(sides) * els.sqrt()
 
 """
  Imagine throwing n darts to (r/2)*(r/2) square which is has circle with radius r
@@ -31,7 +35,39 @@ def monte_carlo(n):
 
     return 4.0 * inside_circle / n
 
-l1000 = leibniz(1000) * 4
-print(l1000, l1000 - math.pi)
-print(archimedes(16))
-print(monte_carlo(100000))
+def error(x):
+    return abs(D(x) - D(math.pi))
+
+def str_frm(x):
+    return "{0:.10f}".format(x)
+
+def evaluate_iterations(i):
+    l = leibniz(i)
+    a = archimedes(i)
+    mc = monte_carlo(i)
+    print(i,
+        str_frm(l), str_frm(error(l)),
+        str_frm(a), str_frm(error(a)),
+        str_frm(mc), str_frm(error(mc)),
+        sep=';')
+
+def test():
+    # Colums: (leibniz, leibniz error), (archimedes, archimedes error), ...
+    # Lines: i, values for i iterations
+    for i in range(8, 20, 4):
+        evaluate_iterations(i)
+
+    for i in range(20, 1021, 100):
+        evaluate_iterations(i)
+
+    for i in range(2000, 102001, 10000):
+        l = leibniz(i)
+        mc = monte_carlo(i)
+        print(i,
+            str_frm(l), str_frm(error(l)),
+            '-;-',
+            str_frm(mc), str_frm(error(mc)),
+            sep=';')
+
+test()
+
