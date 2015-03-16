@@ -1,7 +1,7 @@
 from PIL import Image
 from math import sqrt, sin
 
-side = 200
+side = 400
 
 def gen(path, predicate):
     img = Image.new('RGB', (side,side), 'white')
@@ -13,6 +13,7 @@ def gen(path, predicate):
             if predicate(i, j):
                 pixels[x,y] = (0,0,0)
 
+    img = img.resize((side // 2, side // 2), Image.ANTIALIAS)
     img.save(path)
 
 def disc_pred(x, y):

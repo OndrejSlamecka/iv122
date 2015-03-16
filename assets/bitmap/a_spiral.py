@@ -24,5 +24,6 @@ while dist < side//2:
     angle += 0.05
     dist += 0.004
 
+img = img.resize((side // 2, side // 2), Image.ANTIALIAS)
 img.save('a_spiral.png')
 
