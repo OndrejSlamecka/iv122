@@ -17,12 +17,7 @@ def color(x,y):
     return (r, g, b)
 
 for x in range(-width//2, width//2):
-    # height from middle is sqrt(3) * width / 2,
-    # instead of middle we now have arbitrary point x
-    # on the bases of equil. triangles (we can only see
-    # halves of these triangles in the upper left and
-    # upper right cornes -- the white space)
-    y0 = floor(abs(sqrt(3) * x))
+    y0 = floor(sqrt(3) * abs(x))
     for y in range(y0, height):
         pixels[width // 2 + x, y] = color(x, height - y)
 
