@@ -65,9 +65,7 @@ def intersections(lines):
 
     return result
 
-lines = []
-for i in range(40):
-    lines.append(rand_lineseg())
+lines = [rand_lineseg() for _ in range(40)]
 
 points = intersections(lines)
 render(lines, points)
