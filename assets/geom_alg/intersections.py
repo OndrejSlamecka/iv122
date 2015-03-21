@@ -13,7 +13,7 @@ def render(lines, points):
 
     for p in points:
         dwg.add(dwg.circle(p, r = 3))
-    
+
     dwg.save()
 
 
@@ -30,8 +30,8 @@ def rand_lineseg():
 
     x = random.randint(0 + lineseg_len, plane_size - lineseg_len)
     y = random.randint(0 + lineseg_len, plane_size - lineseg_len)
-    
-    angle = random.randint(0,360)    
+
+    angle = random.randint(0,360)
     a = cos(angle * 180/pi) * lineseg_len
     b = sin(angle * 180/pi) * lineseg_len
 
