@@ -71,7 +71,7 @@ def triangulate(points):
 
     return lines
 
-points = [rand_point() for _ in range(20)]
+points = [rand_point() for _ in range(200)]
 lines = triangulate(points)
 render(lines, points)
 
