@@ -1,13 +1,18 @@
-from math import sin, cos, pi
-import random
+#!/usr/bin/env python3
+
+"""
+How to derive the equation:
+https://www.youtube.com/watch?v=mIx2Oj5y9Q8
+"""
+
 import svgwrite
 
-plane_size = 500
-lineseg_len = 120
+size_coef = 50 # scale the image up
 
-def render(lines, points):
+### I/O
+def render(line, points):
     dwg = svgwrite.Drawing('linreg.svg', profile='tiny')
-    stroke = svgwrite.rgb(10,10,16,'%')
+    stroke = svgwrite.rgb(250,10,16,'%')
 
     minx = 0
     miny = 0
@@ -17,8 +22,11 @@ def render(lines, points):
         if p[1] < miny:
             miny = p[1]
 
-    for f, t in lines:
-        dwg.add(dwg.line(f, t, stroke=stroke))
+    # Draw the line
+    f,t = line
+    f_x, f_y = f
+    t_x, t_y = t
+    dwg.add(dwg.line((f_x - minx, f_y - miny), (t_x - minx, t_y - miny), stroke=stroke))
 
     for p in points:
         dwg.add(dwg.circle((p[0] - minx, p[1] - miny), r = 3))
@@ -30,11 +38,42 @@ def read_points(filename):
     for line in open(filename):
         x,y = line.rstrip().split()
         x,y = float(x), float(y)
-        points.append((x*100,y*100))
+        points.append((x*size_coef,y*size_coef))
 
     return points
 
-lines = []
-points = read_points('linreg.txt')
-render(lines, points)
+### Computations
+
+def linreg(xs, ys):
+    # compute m and b in the equation of our line y = m*x + b
+    def mean(xs): return sum(xs) / len(xs)
+
+    mean_xy = mean([x*y for (x,y) in zip(xs, ys)])
+    mean_xs_squared = mean([x**2 for x in xs])
+
+    m = (mean(xs) * mean(ys) - mean_xy) / (mean(xs)**2 - mean_xs_squared)
+    b = mean(ys) - m * mean(xs)
+
+    y = lambda x: m*x + b
+
+    return y
+
+def equation_to_edge(xs, ys, y):
+    # compute two points on the line
+    minx = min(xs)
+    maxx = max(xs)
+    edge = ((minx, y(minx)), (maxx, y(maxx)))
+    return edge
+
+
+### Main
+if __name__ == "__main__":
+    points = read_points('linreg.txt')
+    xs = [x for (x,y) in points]
+    ys = [y for (x,y) in points]
+
+    y = linreg(xs, ys)
+    line = equation_to_edge(xs, ys, y)
+
+    render(line, points)
 
