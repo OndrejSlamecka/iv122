@@ -80,8 +80,8 @@ def pattern_finder(line):
     max_pat = ''
     max_pat_freq = 0
 
-    for s in range(0,100):  # String starting at 0th to 100th character
-        for l in range(6,150):  # Of length from 6 to 100
+    for s in range(0,100):  # String starting at s-th character
+        for l in range(6,len(line) // 2 + 1):  # Of length l
             pat = line[s:s+l]
             pat_freq = pattern_freq(line, pat)
 
