@@ -15,7 +15,7 @@ def problem_instance(): return [0,1,2]
 
 def unveil_door(treasure, guess):
     """
-     The MC unveils the single door which
+     Monty unveils the single door which
        a) was not picked by the player,
        b) do not contain the treasure
     """
@@ -58,7 +58,8 @@ def mh():
     # The player picks a door
     guess = randint(0,2)
 
-    # The MC unveils one door
+    # Monty unveils one door
+
     door_to_show_to_player = unveil_door(treasure, guess)
 
     ## We proceed to emulate three different strategies of the player
