@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from math import sin, cos, pi
 import numpy as np
 import svgwrite
@@ -7,9 +9,11 @@ def render(lines, name):
     dwg = svgwrite.Drawing('transformations_' + name + '.svg', profile='tiny')
     stroke = svgwrite.rgb(10,10,16,'%')
 
+    apply(rotate(90), lines)  # I am not proud of this
+
     # Preprocess
     xo, yo = 0,0 # offset
-    for i, line in enumerate(lines): 
+    for i, line in enumerate(lines):
         f, t = line[0], line[1]
         f, t = f, t
         f[1], t[1] = -1 * f[1], -1 * t[1]
@@ -41,8 +45,8 @@ def rotate(angle):
     a = angle
     a = a / 180 * pi;
     r = np.array([
-        [cos(a), -sin(a), 0], 
-        [sin(a),  cos(a), 0], 
+        [cos(a), -sin(a), 0],
+        [sin(a),  cos(a), 0],
         [0,       0     , 1]
     ])
     return r
@@ -68,23 +72,23 @@ def apply(m, lines):
         f, t = f.reshape(-1,1), t.reshape(-1,1)
         f = np.dot(m, f)
         t = np.dot(m, t)
-        lines[i] = f[:2, 0], t[:2, 0] 
+        lines[i] = f[:2, 0], t[:2, 0]
     return lines
 
 # Examples
 
 def ex1():
     # Repeat 10: rotation(20), scaling(1.1, 1.1), translation(5, 10)
-    lines = square(50)
+    lines = []
     thing = square(50)
-    for i in range(10):
-        apply(translate(5,10), thing)
-        apply(scale(1.1,1.1), thing)
-        apply(rotate(20), thing)
-        #thing = apply(translate(5,10), apply(scale(1.1, 1.1), apply(rotate(20), thing)))
-    
+
+    for i in range(10+1):
         for line in thing:
             lines.append(line[:])
+
+        apply(rotate(20), thing)
+        apply(scale(1.1,1.1), thing)
+        apply(translate(5,10), thing)
 
     render(lines, 'ex1')
 

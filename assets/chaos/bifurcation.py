@@ -20,11 +20,11 @@ def draw(x_side, y_side, x_range, n_iterations, colour):
         for j in range(n_iterations):
             x = r * x * (1 - x)
             if j > n_iterations / 2:
-                c = colour(i, j, x, y_side, n_iterations)
+                c = colour(j, n_iterations)
                 draw_pixel(y_side, pixels, i, x, c)
 
 
-def colour(i, j, x, y_side, n_iterations):
+def colour(j, n_iterations):
     r,g,b = hls_to_rgb(j / n_iterations * 360,0.6,1)
     r,g,b = tuple(map(lambda x: int(x * 256), (r,g,b)))
     return r,g,b

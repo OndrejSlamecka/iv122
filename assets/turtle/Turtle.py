@@ -12,6 +12,13 @@ class Turtle:
         self.dwg = svgwrite.Drawing(filename + '.svg', profile='tiny')
         self.stroke = svgwrite.rgb(10, 10, 16, '%')
 
+    def serialize(self):
+        return ((self.x, self.y), self.angle)
+
+    def deserialize(self, s):
+        self.x, self.y = s[0]
+        self.angle = s[1]
+
     def forward(self, dist):
         nx = self.x + math.cos(self.angle) * dist
         ny = self.y + math.sin(self.angle) * dist
