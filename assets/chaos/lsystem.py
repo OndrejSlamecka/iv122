@@ -57,7 +57,7 @@ def koch():
     koch = Rules({'F': 'F+F--F+F'})
     s = rewrite(koch, 'F--F--F', 4)
     t = Turtle('koch')
-    guideTurtleThroughString(t, 10, 60, s)
+    guideTurtleThroughString(t, 8, 60, s)
     t.save()
 
 def pentaflake():
@@ -91,12 +91,13 @@ def tree1():
     guideTurtleThroughString(t, 10, 25, s)
     t.save()
 
-def tree2():
+def tree2(angle = 25):
     r = Rules({'A': 'F-[[A]+A]+F[+FA]-A',
                'F': 'FF'})
     s = rewrite(r, 'A', 6)
     t = Turtle('tree2')
-    guideTurtleThroughString(t, 10, 25, s)
+    t.left(180)
+    guideTurtleThroughString(t, 6, angle, s)
     t.save()
 
 def koch_island():
@@ -114,4 +115,4 @@ def gosper():
     guideTurtleThroughString(t, 14, 60, s)
     t.save()
 
-tree1()
+tree2()
