@@ -11,17 +11,20 @@ permalink: /
 
 			<h3>Silné stránky</h3>
 
-				* Barvení Feigenbaumova diagramu
-				* Animace Juliovy množiny
-				* Pěkně okomentovaný kód Monty Hall problému
+				<ul>
+					<li>Barvení Feigenbaumova diagramu</li>
+					<li>Animace Juliovy množiny</li>
+					<li>Pěkně okomentovaný kód Monty Hall problému</li>
+				</ul>
 
 
 			<h3>Slabé stránky</h3>
 
-				* Chybí MRCM
-				* Chybí vybarvení mnohoúhelníka
-				* Přibližné umocňování není (dostatečně) přesné
-
+				<ul>
+					<li>Chybí MRCM</li>
+					<li>Chybí vybarvení mnohoúhelníka</li>
+					<li>Přibližné umocňování není (dostatečně) přesné</li>
+				</ul>
 		</div>
 	</div>
 </div>

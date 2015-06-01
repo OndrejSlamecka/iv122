@@ -14,7 +14,7 @@ def render(name, clusters):
         xs, ys = [p[0] for p in points], [p[1] for p in points]
         plt.plot(xs, ys, colors[i] + 'o')
         plt.plot(centre[0], centre[1], colors[i] + 'D')
-    plt.savefig(name + '.svg')
+    plt.savefig(name + '.png')
 
 def read_points(filename):
     points = []
