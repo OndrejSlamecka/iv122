@@ -32,13 +32,19 @@ class SvgMazeRenderer:
 
         self.lines.append((f,t))
 
+    def add_movement_point(self, p, color):
+        scale = lambda x: tuple(n*self.cellside + self.cellside / 2 for n in x)
+        p = scale(p)
+        c = svgwrite.rgb(250,10,16,'%') if color == 'red' else svgwrite.rgb(0,255,50,'%')
+        self.dwg.add(self.dwg.circle(p, r = 3, fill = c))
+
     def render(self):
         for f,t in self.lines:
             self.dwg.add(self.dwg.line(f, t, stroke=self.stroke))
         self.dwg.save()
 
 class Maze:
-    directions = [(1,0),(0,1),(-1,0),(0,-1)]
+    directions = [(1,0),(0,1),(-1,0),(0,-1)] # right, left, top, bottom
     directions_south_east = [(1,0),(0,1)]
 
     def __init__(self, n):
@@ -146,7 +152,7 @@ class Maze:
         return True
 
 
-    def render(self, drawer):
+    def render(self, drawer, sol):
         for x in range(self.n):
             for y in range(self.n):
                 N = self.N((x,y), self.directions_south_east)
@@ -154,6 +160,14 @@ class Maze:
                 for v in [u for u in PN if u not in N]:
                     f = (x,y)
                     drawer.add_line(f,v)
+
+        pp = None
+        for s in sol:
+            if s[0] == pp:
+                drawer.add_movement_point(s[0], 'red')
+            else:
+                drawer.add_movement_point(s[0], 'green')
+            pp = s[0]
 
 
 def parse_maze(fname):
@@ -175,19 +189,19 @@ def parse_maze(fname):
     return maze
 
 
-def play_game(maze, exit, minotaurus, theseus):
+def solve(maze, start_pos, exit):
     q = deque()
     visited = {}
     pred = {}
 
-    s = (minotaurus, theseus)
+    s = (start_pos, 0) # 0 right, 1 left, 2 top, 3 down
     visited[s] = 1
     q.append(s)
 
     while q:
         u = q.pop()
 
-        if u[1] == exit:
+        if u[0] == exit:
             q = u
             sol = [q]
             while q in pred:
@@ -195,15 +209,20 @@ def play_game(maze, exit, minotaurus, theseus):
                 q = pred[q]
             return sol
 
+        N = []
 
-        # Add options to queue
-        for t_n in maze.N(u[1]):
-            rm, N = minotaurus_turn(maze, u)
-            if t_n in N:
-                continue
+        # Add turns
+        for i in [0,1,2,3]:
+            if i != u[1]:
+                N.append((u[0], i))
 
-            v = (rm, t_n)
+        # Add step in current direction
+        P = maze.N(u[0])
+        n = tuple(map(sum, zip(maze.directions[u[1]], u[0])))
+        if n in P:
+            N.append((n, u[1]))
 
+        for v in N:
             if v not in visited:
                 q.append(v)
                 pred[v] = u
@@ -211,73 +230,12 @@ def play_game(maze, exit, minotaurus, theseus):
 
     return None
 
-
-def minotaurus_turn(maze, u):
-    t = u[1]
-    rm = u[0] # resulting move
-
-    # Calculate minotaurus' movement
-    n = maze.n
-    m_n = u[0]  # the default is stay where you are
-    vd = 1 if m_n[1] - t[1] < 0 else -1
-    hd = 1 if m_n[0] - t[0] < 0 else -1
-    d = (hd, vd)
-    N = []
-
-    # One horizontal step of the mintaurus
-    one_h = (m_n[0] + d[0], m_n[1])
-
-    if one_h[0] < n and one_h[0] >= 0 and one_h[1] < n and one_h[1] >= 0 \
-        and not maze.has_wall(m_n, one_h):
-        rm = one_h
-        N.append(one_h)
-
-    # Do another horizontal if possible
-    two_h = (one_h[0] + d[0], one_h[1])
-
-    if two_h[0] < n and two_h[0] >= 0 and two_h[1] < n and two_h[1] >= 0 \
-        and not maze.has_wall(one_h, two_h):
-        rm = one_h
-        N.append(two_h)
-
-    # Just horizontal was possible, add one vertical from it
-    if len(N) == 1:
-        one_v = (one_h[0], one_h[1] + d[1])
-
-        if one_v[0] < n and one_v[0] >= 0 and one_v[1] < n and one_v[1] >= 0 \
-            and not maze.has_wall(one_h, one_v):
-            rm = one_h
-            N.append(one_v)
-
-    # If no horizontal were possible, do vertical
-    if len(N) == 1:
-        # from m_n
-        one_v = (m_n[0], m_n[1] + d[1])
-
-        if one_v[0] < n and one_v[0] >= 0 and one_v[1] < n and one_v[1] >= 0 \
-            and not maze.has_wall(m_n, one_v):
-            rm = one_h
-            N.append(one_v)
-
-    if len(N) == 1:
-        two_v = (one_v[0], one_v[1] + d[1])
-
-        if two_v[0] < n and two_v[0] >= 0 and two_v[1] < n and two_v[1] >= 0 \
-            and not maze.has_wall(one_v, two_v):
-            rm = one_h
-            N.append(two_v)
-
-    return (rm, N)
-
-
-
 if __name__ == "__main__":
-    maze = parse_maze('minotaurus_maze.txt')
-    n = maze.n  # For Theseus' position
-    sol = play_game(maze, (1,0), (0,0), (n-1, n-1))
-    print(sol)
+    maze = parse_maze('robot_maze.txt')
+    n = maze.n
+    sol = solve(maze, (0,0), (n-3,n-1))
 
-    drawer = SvgMazeRenderer('minotaurus.svg', maze.n, 30)
-    maze.render(drawer)
+    drawer = SvgMazeRenderer('robot.svg', maze.n, 30)
+    maze.render(drawer, sol)
     drawer.render()
 
